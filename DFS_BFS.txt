@@ -1,0 +1,79 @@
+# Graph Traversal using DFS (Adjacency Matrix) and BFS (Adjacency List)
+
+from collections import deque
+
+# ----- DFS using Adjacency Matrix -----
+def dfs(matrix, visited, node):
+    print(node, end=" ")
+    visited[node] = True
+    for i in range(len(matrix[node])):
+        if matrix[node][i] == 1 and not visited[i]:
+            dfs(matrix, visited, i)
+
+# ----- BFS using Adjacency List -----
+def bfs(adj_list, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+        for neighbor in adj_list[node]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+
+# ---------------------------
+# Main Program
+# ---------------------------
+# Let locations be A, B, C, D, E
+# Represent them as 0:A, 1:B, 2:C, 3:D, 4:E
+
+# Adjacency Matrix for DFS
+matrix = [
+    [0, 1, 1, 0, 0],  # A connected to B, C
+    [1, 0, 0, 1, 0],  # B connected to A, D
+    [1, 0, 0, 1, 1],  # C connected to A, D, E
+    [0, 1, 1, 0, 1],  # D connected to B, C, E
+    [0, 0, 1, 1, 0]   # E connected to C, D
+]
+
+# Adjacency List for BFS
+adj_list = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D', 'E'],
+    'D': ['B', 'C', 'E'],
+    'E': ['C', 'D']
+}
+
+# ---- Perform DFS ----
+print("DFS Traversal (using Adjacency Matrix):")
+visited = [False] * len(matrix)
+dfs(matrix, visited, 0)   # Start from node 0 (A)
+
+# ---- Perform BFS ----
+print("\n\nBFS Traversal (using Adjacency List):")
+bfs(adj_list, 'A')
+
+'''
+ALgorithm:
+
+1.	Start
+2.	Create a class Node with attributes key, left, and right.
+3.	Create a class BST with a root node.
+4.	Insertion:
+	•If the tree is empty, insert at root.
+	•Else, insert key in left or right subtree depending on comparison.
+5.	Search:
+	•Traverse left or right subtree based on key comparison.
+6.	Deletion:
+	•If node has one or no child → remove it directly.
+	•If node has two children → replace with inorder successor (minimum of right subtree).
+7.	Display:
+	•Perform inorder traversal (Left → Root → Right).
+8.	Repeat menu operations until user exits.
+9.	Stop
+
+'''

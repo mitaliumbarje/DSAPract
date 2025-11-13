@@ -1,0 +1,117 @@
+# Binary Search Tree Implementation
+
+class Node:
+    def _init_(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class BST:
+    def _init_(self):
+        self.root = None
+
+    # Insert a new node
+    def insert(self, root, data):
+        if root is None:
+            return Node(data)
+        if data < root.data:
+            root.left = self.insert(root.left, data)
+        else:
+            root.right = self.insert(root.right, data)
+        return root
+
+    # Search for a value
+    def search(self, root, key):
+        if root is None or root.data == key:
+            return root
+        if key < root.data:
+            return self.search(root.left, key)
+        return self.search(root.right, key)
+
+    # Find the smallest value (used in deletion)
+    def find_min(self, root):
+        while root.left:
+            root = root.left
+        return root
+
+    # Delete a node
+    def delete(self, root, key):
+        if root is None:
+            return root
+        if key < root.data:
+            root.left = self.delete(root.left, key)
+        elif key > root.data:
+            root.right = self.delete(root.right, key)
+        else:
+            # Node with one or no child
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            # Node with two children
+            temp = self.find_min(root.right)
+            root.data = temp.data
+            root.right = self.delete(root.right, temp.data)
+        return root
+
+    # Display (Inorder Traversal)
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.data, end=" ")
+            self.inorder(root.right)
+
+# ---------------------------
+# Main Program
+# ---------------------------
+bst = BST()
+root = None
+
+# Inserting nodes
+for val in [50, 30, 70, 20, 40, 60, 80]:
+    root = bst.insert(root, val)
+
+print("Inorder Traversal:")
+bst.inorder(root)
+
+# Search
+key = 40
+print("\n\nSearching for", key)
+if bst.search(root, key):
+    print("Found!")
+else:
+    print("Not Found!")
+
+# Delete
+root = bst.delete(root, 30)
+print("\nAfter deleting 30:")
+bst.inorder(root)
+
+'''
+Algorithm:
+
+Insertion
+	1.	If tree is empty, create new node as root.
+	2.	If key < root, insert into left subtree.
+	3.	If key > root, insert into right subtree.
+	4.	Repeat until correct position is found.
+
+Searching
+	1.	If tree is empty, element not found.
+	2.	If key = root, element found.
+	3.	If key < root, search in left subtree.
+	4.	Else, search in right subtree.
+
+Deletion
+	1.	If key < root, go left; if key > root, go right.
+	2.	If key = root:
+	•	No child → delete node.
+	•	One child → replace with child.
+	•	Two children → replace with inorder successor, then delete it.
+
+Display (Inorder Traversal)
+	1.	Traverse left subtree.
+	2.	Visit root.
+	3.	Traverse right subtree.
+
+'''
