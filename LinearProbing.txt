@@ -1,0 +1,86 @@
+#Linear Probing
+
+SIZE = 10
+table = [None] * SIZE
+
+def hashfn(key): return key % SIZE
+
+def insert(rno, name):
+    i = start = hashfn(rno)
+    while table[i] is not None:
+        i = (i + 1) % SIZE
+        if i == start:
+            print("Table full!")
+            return
+    table[i] = (rno, name)
+    print("Record inserted at index", i)
+
+def display():
+    for i, val in enumerate(table):
+        print(f"{i}: {val}")
+
+def search(rno):
+    i = start = hashfn(rno)
+    while table[i] is not None:
+        if table[i][0] == rno:
+            print(f"Found at index {i}: {table[i]}")
+            return
+        i = (i + 1) % SIZE
+        if i == start: break
+    print("Not found")
+
+def delete(rno):
+    i = start = hashfn(rno)
+    while table[i] is not None:
+        if table[i][0] == rno:
+            table[i] = None
+            print("Record deleted from index", i)
+            return
+        i = (i + 1) % SIZE
+        if i == start: break
+    print("Record not found")
+
+while True:
+    ch = input("\n1.Insert 2.Display 3.Search 4.Delete 5.Exit\nChoice: ")
+    if ch == "1": insert(int(input("Roll no: ")), input("Name: "))
+    elif ch == "2": display()
+    elif ch == "3": search(int(input("Roll no to search: ")))
+    elif ch == "4": delete(int(input("Roll no to delete: ")))
+    elif ch == "5": break
+    else: print("Invalid choice!")
+
+'''
+Algorithm:
+
+1. Insert(key):
+Input: key
+index = key % table_size
+While table[index] is occupied and not marked as deleted:
+index = (index + 1) % table_size
+Insert key at table[index]
+2. Search(key):
+Input: key
+index = key % table_size
+While table[index] is not empty:
+If table[index] == key:
+Return "Key found at index"
+index = (index + 1) % table_size
+If looped back to original index:
+Break
+Return "Key not found"
+3. Delete(key):
+Input: key
+index = key % table_size
+While table[index] is not empty:
+If table[index] == key:
+Mark table[index] as "DELETED"
+Return "Key deleted"
+index = (index + 1) % table_size
+If looped back:
+Break
+Return "Key not found"
+4. Display():
+For index in range(0, table_size):
+Print index and value (or "EMPTY"/"DELETED")
+
+'''

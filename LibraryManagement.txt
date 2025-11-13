@@ -1,0 +1,72 @@
+#Library Management
+
+#Library Program
+n = int(input("Enter number of library members: "))
+books_list = []
+for i in range(n):
+    name = input(f"\nEnter member name {i+1}: ")
+    b = int(input(f"How many books has {name} borrowed? "))
+    books = [input(f"Enter book name {j+1}: ") for j in range(b)]
+    books_list.append(books)
+# Average books
+average = sum(len(b) for b in books_list) / n
+# Book frequency
+book_count = {}
+for books in books_list:
+    for b in books:
+        book_count[b] = book_count.get(b, 0) + 1
+# Most and least borrowed
+if book_count:
+    max_val, min_val = max(book_count.values()), min(book_count.values())
+    most = [b for b, c in book_count.items() if c == max_val]
+    least = [b for b, c in book_count.items() if c == min_val]
+else:
+    most = least = []
+# Members with no books
+no_books = sum(1 for b in books_list if not b)
+# Output
+print("\n----- Library Report -----")
+print("Average books borrowed:", round(average, 2))
+print("Most borrowed book(s):", most)
+print("Least borrowed book(s):", least)
+print("Members who borrowed no books:", no_books)
+
+'''
+Algorithm:
+
+Step 1: Input
+Start
+Read n (number of library members)
+Create an empty list books_list
+For each member i from 1 to n:
+a. Read member name
+b. Read number of books borrowed b
+c. Read the b book names into a list
+d. Append this list to books_list
+Step 2: Calculate Average Books Borrowed
+Compute total borrowed books = sum of lengths of each member’s list
+Calculate average = total books ÷ n
+Step 3: Count Frequency of Each Book
+Create an empty dictionary book_count
+For every member’s book list:
+For each book:
+• Increase its count in book_count
+Step 4: Find Most & Least Borrowed Books
+If book_count is not empty:
+a. Find max_val = highest frequency
+b. Find min_val = lowest frequency
+c. Most borrowed books = all books with frequency = max_val
+d. Least borrowed books = all books with frequency = min_val
+Else:
+Set both lists empty
+Step 5: Count Members Who Borrowed No Books
+Count how many members have an empty book list
+Step 6: Output
+Display:
+Average books borrowed
+Most borrowed book(s)
+Least borrowed book(s)
+Number of members with no books
+Step 7: Stop
+
+'''

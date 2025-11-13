@@ -1,0 +1,57 @@
+#Linear and Binary Search
+
+def linear_search(lst, x):
+    for i in range(len(lst)):
+        if lst[i] == x:
+            return i
+    return -1
+def binary_search(lst, x):
+    low, high = 0, len(lst) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if lst[mid] == x:
+            return mid
+        elif lst[mid] < x:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+# Input
+n = int(input("Enter number of customer IDs: "))
+ids = [int(input(f"ID {i+1}: ")) for i in range(n)]
+x = int(input("Enter ID to search: "))
+# Linear search
+i1 = linear_search(ids, x)
+print("Linear Search:", "Found at index" if i1 != -1 else "Not found", i1 if i1 != -1 else "")
+# Binary search (on sorted list)
+ids.sort()
+i2 = binary_search(ids, x)
+print("Binary Search:", "Found at index" if i2 != -1 else "Not found", i2 if i2 != -1 else "")
+
+'''
+Algorithm:
+
+Step 1: Input
+Start
+Read n (number of customer IDs)
+Read n IDs into the list ids
+Read the search value x
+Linear Search Algorithm
+Set index i = 0
+Repeat while i < n:
+If ids[i] == x, return i (element found)
+Else increment i
+If loop ends, return -1 (element not found)
+Display result
+Binary Search Algorithm
+Sort the list ids in ascending order
+Set low = 0, high = n – 1
+Repeat while low <= high:
+Compute mid = (low + high) // 2
+If ids[mid] == x, return mid
+If ids[mid] < x, set low = mid + 1
+Else set high = mid – 1
+If not found, return -1
+Display result
+
+'''

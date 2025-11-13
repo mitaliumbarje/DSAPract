@@ -1,0 +1,126 @@
+#Linked Lists
+
+class Node:
+    def __init__(self, r, n, m):
+        self.r, self.n, self.m, self.next = r, n, m, None
+
+class StudentList:
+    def __init__(self):
+        self.head = None
+
+    def add(self, r, n, m):
+        new = Node(r, n, m)
+        if not self.head: self.head = new
+        else:
+            t = self.head
+            while t.next: t = t.next
+            t.next = new
+        print("Added!")
+
+    def display(self):
+        t = self.head
+        if not t: print("No records."); return
+        print("Roll\tName\tMarks")
+        while t:
+            print(t.r, t.n, t.m, sep="\t")
+            t = t.next
+
+    def search(self, r):
+        t = self.head
+        while t:
+            if t.r == r:
+                print("Found:", t.r, t.n, t.m); return
+            t = t.next
+        print("Not found!")
+
+    def delete(self, r):
+        t, p = self.head, None
+        while t:
+            if t.r == r:
+                if p: p.next = t.next
+                else: self.head = t.next
+                print("Deleted!"); return
+            p, t = t, t.next
+        print("Not found!")
+
+    def update(self, r, n, m):
+        t = self.head
+        while t:
+            if t.r == r:
+                t.n, t.m = n, m
+                print("Updated!"); return
+            t = t.next
+        print("Not found!")
+
+    def sort(self):
+        if not self.head: return
+        sw = True
+        while sw:
+            sw, t = False, self.head
+            while t.next:
+                if t.r > t.next.r:
+                    t.r, t.next.r = t.next.r, t.r
+                    t.n, t.next.n = t.next.n, t.n
+                    t.m, t.next.m = t.next.m, t.m
+                    sw = True
+                t = t.next
+        print("Sorted!")
+
+s = StudentList()
+while True:
+    print("\n1.Add 2.Display 3.Search 4.Delete 5.Update 6.Sort 7.Exit")
+    c = int(input("Choice: "))
+    if c==1: s.add(int(input("Roll: ")), input("Name: "), float(input("Marks: ")))
+    elif c==2: s.display()
+    elif c==3: s.search(int(input("Roll: ")))
+    elif c==4: s.delete(int(input("Roll: ")))
+    elif c==5: s.update(int(input("Roll: ")), input("New Name: "), float(input("New Marks: ")))
+    elif c==6: s.sort()
+    elif c==7: break
+
+'''
+Algorithm:
+
+1. Add Student Record
+Input: Roll No, Name, Marks
+Create a new node with the given data
+If list is empty:
+Set new node as head
+Else:
+Data Structure laboratory 2025-2026
+Department of Computer Engineering Page 17
+Traverse to the end and insert the node
+2. Delete Student Record
+Input: Roll No
+Traverse the list
+If Roll No is found:
+Remove the node and free memory
+Else:
+Print "Record not found"
+3. Update Student Record
+Input: Roll No
+Traverse the list
+If Roll No is found:
+Update Name and/or Marks
+Else:
+Print "Record not found"
+4. Search Student Record
+Input: Roll No
+Traverse the list
+If Roll No is found:
+Display the record
+Else:
+Print "Record not found"
+5. Sort Student Records
+Input: Sort by (Roll No / Marks), Order (Ascending / Descending)
+Use bubble sort or insertion sort on linked list
+Compare and swap nodes based on selected criteria
+6. Display Records
+Input: Order (Ascending / Descending), Field (Roll No / Marks)
+If descending:
+Sort list in descending order
+Else:
+Sort list in ascending order
+Traverse and print all nodes
+
+'''

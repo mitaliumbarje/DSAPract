@@ -1,0 +1,68 @@
+#Undo Redo
+
+#undo redo
+Text=" " 
+size=50 
+ustack=[None]*size 
+rstack=[None]*size 
+utop=-1 
+rtop=-1 
+ 
+def InputData(new_Text): 
+    global utop,rtop,Text 
+    utop=utop+1 
+    ustack[utop]=Text 
+    Text=Text+new_Text 
+ 
+def undoStack(): 
+    global Text,utop,rtop 
+    rtop=rtop+1 
+    rstack[rtop]=Text 
+    Text=ustack[utop] 
+    utop=utop-1 
+ 
+def RedoStack(): 
+    global Text,utop,rtop 
+    Text=rstack[rtop] 
+    rtop=rtop-1 
+    utop=utop+1 
+    ustack[utop]=Text 
+ 
+def ShowText(): 
+    print("Contents are:",Text) 
+     
+while True: 
+    print("1.Insert text: \n2.Show text: \n3.Undo: \n4.Redo: \n5.Exit") 
+    ch=int(input("Enter choice: ")) 
+    if ch==1: 
+        Text1=input("Enter text: ")           
+        InputData(Text1) 
+    if ch==2: 
+        ShowText() 
+    if ch==3: 
+        undoStack() 
+    if ch==4: 
+        RedoStack() 
+    if ch==5: 
+        break
+
+'''
+Algorithm:
+
+Start
+Initialize Text = "", two stacks ustack, rstack, and tops utop = -1, rtop = -1
+Repeat until Exit:
+Insert:
+a. Push current Text on undo stack
+b. Add new text to Text
+Show:
+Display Text
+Undo:
+a. Push current Text on redo stack
+b. Pop last value from undo stack into Text
+Redo:
+a. Push current Text on undo stack
+b. Pop last value from redo stack into Text
+Stop
+
+'''

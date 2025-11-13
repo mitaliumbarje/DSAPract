@@ -1,0 +1,60 @@
+#Event Queue
+
+from collections import deque
+queue = deque()
+SIZE = 5
+def add_event(new_event):
+    if len(queue) >= SIZE:
+        print("Queue is full!")
+    else:
+        queue.append(new_event)
+        print(f"{new_event} is added to the queue.")
+
+def process_event():
+    if not queue:
+        print("Queue is empty!")
+    else:
+        print(f"{queue.popleft()} event is processed.")
+
+def display_events():
+    if not queue:
+        print("Queue is empty!")
+    else:
+        print("Current events:", list(queue))
+
+def cancel_event(key):
+    if key in queue:
+        queue.remove(key)
+        print(f"{key} event has been cancelled.")
+    else:
+        print(f"Requested event '{key}' not found.")
+while True:
+    print("\n1. Add Event\n2. Process Event\n3. Display\n4. Cancel Event\n5. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        add_event(input("Enter event to add: "))
+    elif choice == "2":
+        process_event()
+    elif choice == "3":
+        display_events()
+    elif choice == "4":
+        cancel_event(input("Enter event to cancel: "))
+        display_events()
+    elif choice == "5":
+        break
+    else:
+        print("Invalid choice!")
+
+'''
+Algorithm:
+
+Start
+Initialize an empty queue with max size = 5
+Repeat until user selects Exit:
+Add Event: If queue not full, add event; else show “Full”
+Process Event: If queue not empty, remove front event; else show “Empty”
+Display: Show all events or “Empty”
+Cancel Event: If event exists, remove it; else show “Not found”
+Stop
+
+'''

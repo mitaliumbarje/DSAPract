@@ -1,0 +1,67 @@
+#Hashing and Chaining
+
+SIZE = 10
+table = [[] for _ in range(SIZE)]
+
+def h(k): return k % SIZE
+
+def insert(k, v):
+    i = h(k)
+    for x, _ in table[i]:
+        if x == k: return print("Key exists!")
+    if table[i]: print("Chaining...")
+    table[i].append((k, v))
+    print(f"Inserted ({k}, {v}) at index {i}")
+
+def search(k):
+    i = h(k)
+    for x, y in table[i]:
+        if x == k: return print(f"Found at {i}: ({x}, {y})")
+    print("Not found")
+
+def delete(k):
+    i = h(k)
+    for n, (x, _) in enumerate(table[i]):
+        if x == k:
+            del table[i][n]; return print("Deleted")
+    print("Not found")
+
+while True:
+    c = input("\n1.Insert 2.Display 3.Search 4.Delete 5.Exit\nChoice: ")
+    if c == "1": insert(int(input("Key: ")), input("Name: "))
+    elif c == "2": [print(f"{i}: {b}") for i, b in enumerate(table)]
+    elif c == "3": search(int(input("Key: ")))
+    elif c == "4": delete(int(input("Key: ")))
+    elif c == "5": break
+
+'''
+Algorithm:
+
+1. Insert(key, value):
+Input: key, value
+index = key % 10
+If table[index] is empty:
+Create a new node and assign it to table[index]
+Else:
+Traverse the linked list at table[index]
+If key exists, update the value
+Else, append a new node at the end
+2. Search(key):
+Input: key
+index = key % 10
+Traverse the linked list at table[index]
+If key is found:
+Return associated value
+Else:
+Print "Key not found"
+3. Delete(key):
+Input: key
+index = key % 10
+Traverse the linked list at table[index]
+If key is found:
+Remove the node from the list
+Print "Key deleted"
+Else:
+Print "Key not found"
+
+'''
